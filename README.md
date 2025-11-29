@@ -5,35 +5,39 @@
 
 O que faz: gera um arquivo keystrokes_simulated.txt baseado em um input_sim.txt (textos que você cria), adiciona timestamps e mostra como um keylogger formataria logs — não captura eventos do sistema.
 
-# scripts/simulate_keylogger.py
-"""
-Simulação de keylogger para fins educacionais.
-NÃO captura teclado do usuário. Apenas lê um arquivo de entrada simulado e grava um log.
-"""
 
-import os
-import time
-from datetime import datetime
 
-BASE = os.path.join(os.path.dirname(__file__), '..', 'lab_files')
-INPUT_FILE = os.path.join(BASE, 'input_sim.txt')
-OUTPUT_FILE = os.path.join(BASE, 'keystrokes_simulated.txt')
+Inclua seções com:
 
-# Se input_sim.txt não existir, cria um exemplo
-if not os.path.exists(INPUT_FILE):
-    with open(INPUT_FILE, 'w', encoding='utf-8') as f:
-        f.write("usuario_digitou_hello\nusuario_digitou_senha123\nusuario_digitou_enter\n")
+Prevenção:
 
-with open(INPUT_FILE, 'r', encoding='utf-8') as fin, open(OUTPUT_FILE, 'w', encoding='utf-8') as fout:
-    for line in fin:
-        kt = line.strip()
-        timestamp = datetime.utcnow().isoformat() + 'Z'
-        fout.write(f"{timestamp} - {kt}\n")
-        # simula intervalo entre teclas
-        time.sleep(0.1)
+Backup regular (offline & testado).
 
-print(f"Log simulado escrito em: {OUTPUT_FILE}")
+Privilégios mínimos (least privilege).
 
+Política de atualizações (patching).
+
+Treinamento de usuários (phishing, engenharia social).
+
+Detecção:
+
+Monitoramento de criação massiva/alteração de arquivos: alertas por taxa de I/O, criação de arquivos com sufixos estranhos.
+
+Monitoramento de processos que iniciam criptografia de muitos arquivos.
+
+EDR/anti-malware com heurísticas e detecção comportamental.
+
+Integridade (hash) de arquivos críticos.
+
+Resposta:
+
+Isolar host (air-gap) imediatamente.
+
+Triage dos backups e restore em instância limpa.
+
+Coleta de IOC (hashes, caminhos, processos) e enviar à equipe de IR.
+
+Comunicação interna e, se aplicável, autoridades.
 
 
 
